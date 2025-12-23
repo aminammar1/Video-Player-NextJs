@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0b0b0f;
+  --foreground: #f3f3f5;
+  --accent: #e50914;
+  --secondary: #14141a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-secondary: var(--secondary);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0b0b0f;
+    --foreground: #f3f3f5;
+    --accent: #e50914;
+    --secondary: #14141a;
+  }
+}
+
+body {
+  background:
+    radial-gradient(1200px 700px at 50% 0%, color-mix(in srgb, var(--accent) 22%, transparent) 0%, transparent 62%),
+    radial-gradient(1000px 650px at 85% 95%, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 60%),
+    radial-gradient(900px 600px at 10% 10%, color-mix(in srgb, white 7%, transparent) 0%, transparent 55%),
+    linear-gradient(180deg, var(--background) 0%, color-mix(in srgb, var(--background) 92%, black) 100%);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.surface {
+  background: color-mix(in srgb, var(--secondary) 88%, black);
+  border: 1px solid color-mix(in srgb, white 10%, transparent);
+}
+
+.surface-glass {
+  background: color-mix(in srgb, var(--secondary) 70%, transparent);
+  border: 1px solid color-mix(in srgb, white 12%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.subtitle-netflix {
+  color: var(--foreground);
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+  text-shadow:
+    0 2px 2px rgba(0, 0, 0, 0.9),
+    0 6px 16px rgba(0, 0, 0, 0.75),
+    0 0 1px rgba(0, 0, 0, 0.95);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+  opacity: 0.6;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  opacity: 1;
+}
