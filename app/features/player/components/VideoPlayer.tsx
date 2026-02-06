@@ -33,6 +33,7 @@ export default function VideoPlayer({
     duration,
     volume,
     isFullscreen,
+    isLooping,
     showControls,
     currentSubtitle,
     playbackError,
@@ -46,6 +47,7 @@ export default function VideoPlayer({
     handleTimelineChange,
     handleVolumeChange,
     handleToggleMute,
+    handleToggleLoop,
     handleFullscreen,
   } = useVideoController({
     videoSrc,
@@ -106,6 +108,7 @@ export default function VideoPlayer({
           <video
             ref={videoRef}
             src={videoSourceUrl}
+            loop={isLooping}
             className="w-full h-full object-contain"
             onPlay={() => setIsPlaying(true)}
             onPause={() => setIsPlaying(false)}
@@ -166,10 +169,12 @@ export default function VideoPlayer({
               volume={volume}
               isMuted={volume === 0}
               isFullscreen={isFullscreen}
+              isLooping={isLooping}
               onPlayPause={handlePlayPause}
               onTimelineChange={handleTimelineChange}
               onVolumeChange={handleVolumeChange}
               onToggleMute={handleToggleMute}
+              onToggleLoop={handleToggleLoop}
               onFullscreen={handleFullscreen}
               isFocusMode={isFocusMode}
             />

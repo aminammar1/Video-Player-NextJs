@@ -31,6 +31,7 @@ export function useVideoController({
   const [showControls, setShowControls] = useState(true);
   const [currentSubtitle, setCurrentSubtitle] = useState("");
   const [playbackError, setPlaybackError] = useState<string>("");
+  const [isLooping, setIsLooping] = useState(false);
 
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -101,6 +102,12 @@ export function useVideoController({
   const handleTimelineChange = (newTime: number) => {
     setCurrentTime(newTime);
     if (videoRef.current) videoRef.current.currentTime = newTime;
+  };
+
+  const handleToggleLoop = () => {
+    const newLooping = !isLooping;
+    setIsLooping(newLooping);
+    if (videoRef.current) videoRef.current.loop = newLooping;
   };
 
   const handleFullscreen = () => {
@@ -189,6 +196,7 @@ export function useVideoController({
     duration,
     volume,
     isFullscreen,
+    isLooping,
     showControls,
     currentSubtitle,
     playbackError,
@@ -204,6 +212,7 @@ export function useVideoController({
     handleTimelineChange,
     handleVolumeChange,
     handleToggleMute,
+    handleToggleLoop,
     handleFullscreen,
   };
 }

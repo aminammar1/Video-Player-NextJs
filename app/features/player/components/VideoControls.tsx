@@ -6,6 +6,7 @@ import {
   Minimize,
   Pause,
   Play,
+  Repeat,
   Volume1,
   Volume2,
   VolumeX,
@@ -19,10 +20,12 @@ interface VideoControlsProps {
   volume: number;
   isMuted: boolean;
   isFullscreen: boolean;
+  isLooping: boolean;
   onPlayPause: () => void;
   onTimelineChange: (time: number) => void;
   onVolumeChange: (volume: number) => void;
   onToggleMute: () => void;
+  onToggleLoop: () => void;
   onFullscreen: () => void;
   isFocusMode: boolean;
 }
@@ -48,10 +51,12 @@ export default function VideoControls({
   volume,
   isMuted,
   isFullscreen,
+  isLooping,
   onPlayPause,
   onTimelineChange,
   onVolumeChange,
   onToggleMute,
+  onToggleLoop,
   onFullscreen,
   isFocusMode,
 }: VideoControlsProps) {
@@ -108,13 +113,23 @@ export default function VideoControls({
           </div>
         </div>
 
-        <button
-          onClick={onFullscreen}
-          className="text-white/95 transition-colors hover:text-white"
-          title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
-        >
-          {isFullscreen ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={onToggleLoop}
+            className={`transition-colors ${isLooping ? "text-blue-400 hover:text-blue-300" : "text-white/95 hover:text-white"}`}
+            title={isLooping ? "Disable loop" : "Enable loop"}
+          >
+            <Repeat className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={onFullscreen}
+            className="text-white/95 transition-colors hover:text-white"
+            title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
+          >
+            {isFullscreen ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
     </div>
   );
