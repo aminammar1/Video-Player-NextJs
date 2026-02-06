@@ -72,10 +72,10 @@ export default function Home() {
             <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4 sm:px-6">
               <div className="flex items-center gap-3">
                 <div className="h-6 w-1 rounded-full bg-[color:var(--accent)]" />
-                <span className="text-sm font-semibold tracking-wide text-white">Watchroom</span>
+                <span className="text-base font-bold tracking-wide text-white">Watchroom</span>
               </div>
               <div className="flex items-center gap-3">
-                <span className="text-xs text-white/60">Focus</span>
+                <span className="text-xs text-white/50">Focus</span>
                 <Switch checked={isFocusMode} onCheckedChange={() => setIsFocusMode(!isFocusMode)} />
               </div>
             </div>

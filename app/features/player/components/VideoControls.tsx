@@ -7,6 +7,8 @@ import {
   Pause,
   Play,
   Repeat,
+  SkipBack,
+  SkipForward,
   Volume1,
   Volume2,
   VolumeX,
@@ -64,29 +66,50 @@ export default function VideoControls({
   const clampedTime = Math.min(Math.max(currentTime, 0), clampedDuration || 0);
 
   return (
-    <div className="space-y-3 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-4">
+    <div className="space-y-2 bg-gradient-to-t from-black/90 via-black/60 to-transparent px-4 pb-3 pt-8">
       <Slider
         value={[clampedTime]}
         min={0}
         max={clampedDuration || 0}
         step={0.1}
         onValueChange={(v) => onTimelineChange(v[0] ?? 0)}
+        variant="timeline"
       />
 
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <button
             onClick={onPlayPause}
-            className="text-white/95 transition-colors hover:text-white"
+            className="text-white transition-all hover:scale-110"
             title={isPlaying ? "Pause" : "Play"}
           >
-            {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+            {isPlaying ? (
+              <Pause className="h-6 w-6" fill="currentColor" />
+            ) : (
+              <Play className="h-6 w-6" fill="currentColor" />
+            )}
           </button>
 
-          <div className="flex items-center gap-2">
+          <button
+            onClick={() => onTimelineChange(Math.max(0, currentTime - 10))}
+            className="text-white/80 transition-all hover:text-white hover:scale-110"
+            title="Rewind 10s"
+          >
+            <SkipBack className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={() => onTimelineChange(Math.min(clampedDuration, currentTime + 10))}
+            className="text-white/80 transition-all hover:text-white hover:scale-110"
+            title="Forward 10s"
+          >
+            <SkipForward className="h-5 w-5" />
+          </button>
+
+          <div className="group flex items-center gap-2">
             <button
               onClick={onToggleMute}
-              className="text-white/95 transition-colors hover:text-white"
+              className="text-white/80 transition-all hover:text-white hover:scale-110"
               title={isMuted ? "Unmute" : "Mute"}
             >
               {isMuted || volume === 0 ? (
@@ -97,7 +120,7 @@ export default function VideoControls({
                 <Volume2 className="h-5 w-5" />
               )}
             </button>
-            <div className="w-28">
+            <div className="w-0 overflow-hidden transition-all duration-300 group-hover:w-24">
               <Slider
                 value={[volume]}
                 min={0}
@@ -108,15 +131,15 @@ export default function VideoControls({
             </div>
           </div>
 
-          <div className="text-xs font-mono text-white/70">
-            {formatTime(clampedTime)} <span className="text-white/35">/</span> {formatTime(clampedDuration)}
+          <div className="ml-1 text-xs font-mono font-medium text-white/70">
+            {formatTime(clampedTime)} <span className="text-white/30">/</span> {formatTime(clampedDuration)}
           </div>
         </div>
 
         <div className="flex items-center gap-3">
           <button
             onClick={onToggleLoop}
-            className={`transition-colors ${isLooping ? "text-blue-400 hover:text-blue-300" : "text-white/95 hover:text-white"}`}
+            className={`transition-all hover:scale-110 ${isLooping ? "text-[color:var(--accent)] hover:text-red-400" : "text-white/80 hover:text-[color:var(--accent)]"}`}
             title={isLooping ? "Disable loop" : "Enable loop"}
           >
             <Repeat className="h-5 w-5" />
@@ -124,7 +147,7 @@ export default function VideoControls({
 
           <button
             onClick={onFullscreen}
-            className="text-white/95 transition-colors hover:text-white"
+            className="text-white/80 transition-all hover:text-white hover:scale-110"
             title={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
           >
             {isFullscreen ? <Minimize className="h-5 w-5" /> : <Maximize className="h-5 w-5" />}

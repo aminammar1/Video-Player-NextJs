@@ -60,12 +60,13 @@ export default function VideoPlayer({
 
   if (!videoSourceUrl) {
     return (
-      <div className="w-full aspect-video rounded-xl bg-black/80 flex items-center justify-center border border-white/10">
+      <div className="w-full aspect-video rounded-xl bg-black/90 flex items-center justify-center border border-white/5">
         <div className="text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5">
-            <Film className="h-5 w-5 text-white/70" />
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white/5 border border-white/10">
+            <Film className="h-6 w-6 text-white/50" />
           </div>
-          <p className="text-white/60 text-sm">Load a local file or paste a direct media URL</p>
+          <p className="text-white/50 text-sm font-medium">Load a local file or paste a media URL</p>
+          <p className="text-white/30 text-xs mt-1">Supports MP4, WebM, YouTube, Vimeo</p>
         </div>
       </div>
     );
@@ -74,7 +75,7 @@ export default function VideoPlayer({
   return (
     <div
       ref={containerRef}
-      className={`w-full bg-black rounded-xl overflow-hidden shadow-2xl transition-all duration-300 ${isFullscreen ? "fixed inset-0 rounded-none z-50" : ""
+      className={`w-full bg-black overflow-hidden shadow-2xl shadow-black/50 transition-all duration-300 ${isFullscreen ? "fixed inset-0 z-50" : "rounded-xl"
         }`}
       onMouseMove={handleMouseMove}
       onMouseLeave={() => isPlaying && isFocusMode && setShowControls(false)}
@@ -136,27 +137,38 @@ export default function VideoPlayer({
 
         {/* Playback error */}
         {playbackError && (
-          <div className="absolute inset-0 flex items-center justify-center bg-black/60 p-6">
-            <div className="max-w-lg rounded-2xl border border-white/10 bg-black/70 p-5 text-center">
-              <p className="text-sm font-semibold text-white">Can’t play this source</p>
-              <p className="mt-2 text-xs leading-relaxed text-white/65">{playbackError}</p>
+          <div className="absolute inset-0 flex items-center justify-center bg-black/70 p-6">
+            <div className="max-w-lg rounded-2xl border border-white/10 bg-black/80 p-6 text-center backdrop-blur-sm">
+              <p className="text-sm font-semibold text-white">Can&apos;t play this source</p>
+              <p className="mt-2 text-xs leading-relaxed text-white/60">{playbackError}</p>
             </div>
           </div>
         )}
 
+        {/* Click to play/pause */}
+        <div
+          className="absolute inset-0"
+          onClick={handlePlayPause}
+        />
+
         {/* Controls overlay */}
         <div
-          className={`absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"
+          className={`absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-transparent transition-opacity duration-300 pointer-events-none ${showControls ? "opacity-100" : "opacity-0"
+            }`}
+        />
+
+        <div
+          className={`absolute inset-0 transition-opacity duration-300 ${showControls ? "opacity-100" : "opacity-0"
             } ${isFocusMode && !showControls ? "pointer-events-none" : ""}`}
         >
-          {/* Play button overlay */}
+          {/* Center play button overlay */}
           {!isPlaying && (
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <button
                 onClick={handlePlayPause}
-                className="w-20 h-20 rounded-full bg-white/10 hover:bg-white/15 backdrop-blur-sm flex items-center justify-center transition-all duration-300 hover:scale-105 border border-white/15"
+                className="pointer-events-auto w-16 h-16 rounded-full bg-white/10 hover:bg-[color:var(--accent)] backdrop-blur-md flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 hover:border-transparent"
               >
-                <Play className="h-9 w-9 text-white" fill="currentColor" />
+                <Play className="h-7 w-7 text-white ml-0.5" fill="currentColor" />
               </button>
             </div>
           )}
